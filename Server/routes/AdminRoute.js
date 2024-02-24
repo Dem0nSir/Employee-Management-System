@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Router } from "express";
 import con from "../utils/db.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
@@ -145,5 +145,58 @@ router.put("/edit_employee/:id", (req, res) => {
     }
   );
 });
+router.delete("/delete_employee/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = "DELETE FROM employee WHERE id = ?";
+  con.query(sql, [id], (err, result) => {
+    if (err) {
+      return res.json({ Status: false, Error: "Error in query" });
+    } else {
+      return res.json({ Status: true });
+    }
+  });
+});
+router.get("/admin_count", (req, res) => {
+  const sql = "select count(id) as admin from admin";
+  con.query(sql, (err, result) => {
+    if (err) {
+      return res.json({ Status: false, Error: "Error in query" });
+    } else {
+     
+      return res.json({ Status: true, Result: result });
+    }
+  });
+});
+router.get("/employee_count", (req, res) => {
+  const sql = "select count(id) as employee from employee";
+  con.query(sql, (err, result) => {
+    if (err) {
+      return res.json({ Status: false, Error: "Error in query" });
+    } else {
+      return res.json({ Status: true, Result: result });
+    }
+  });
+});
+router.get("/salary_count", (req, res) => {
+  const sql = "select sum(salary) as salary from employee";
+  con.query(sql, (err, result) => {
+    if (err) {
+      return res.json({ Status: false, Error: "Error in query" });
+    } else {
+      return res.json({ Status: true, Result: result });
+    }
+  });
+});
+router.get("/admins", (req, res) => {
+  const sql = "SELECT * FROM admin";
+  con.query(sql, function (err, result) {
+    if (err) {
+      return res.json({ Status: false, Error: "Error in query" });
+    } else {
+      return res.json({ Status: true, Result: result });
+    }
+  });
+}
+);
 
 export { router as adminRouter };

@@ -16,6 +16,18 @@ const Employee = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+  const handleDelete = (id) => {
+    axios
+      .delete("http://localhost:3000/auth/delete_employee/" + id)
+      .then((result) => {
+        if (result.data.Status) {
+          window.location.reload();
+        } else {
+          alert(result.data.Error);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="px-5 py-3">
       <div className="d-flex justify-content-center mt-2">
@@ -67,7 +79,7 @@ const Employee = () => {
                 <td>{e.salary}</td>
                 <td>
                   <Link to={`/dashboard/edit_employee/`+ e.id} className="btn btn-primary btn-sm me-2">Edit</Link>
-                  <button className="btn btn-sm btn-danger">Delete</button>
+                  <button className="btn btn-sm btn-danger" onClick={()=>handleDelete(e.id)}>Delete</button>
                 </td>
               </tr>
             ))}
