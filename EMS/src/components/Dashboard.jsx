@@ -7,9 +7,11 @@ import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
+
   const handleLogout = () => {
     axios.get("http://localhost:3000/auth/logout").then((result) => {
       if (result.data.status) {
+        localStorage.removeItem("valid");
         navigate("/");
       }
     });

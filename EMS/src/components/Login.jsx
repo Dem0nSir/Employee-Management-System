@@ -19,7 +19,6 @@ const Login = () => {
       console.log(result.data)
       if(result.data.loginStatus){
         localStorage.setItem("valid", true)
-        console.log(result.data.LoginStatus)
         navigate('/dashboard')
       }else{
         setError(result.data.Error)

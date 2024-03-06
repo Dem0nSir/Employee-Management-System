@@ -5,7 +5,7 @@ import Employee from "./components/Employee";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter, Route, Routes} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Profile from "./components/Profile";
 import Add_Category from "./components/Add_Category";
 import AddEmployee from "./components/AddEmployee";
@@ -13,14 +13,13 @@ import EditEmployee from "./components/EditEmployee";
 import Start from "./components/Start";
 import EmployeeLogin from "./components/EmployeeLogin";
 import EmployeeDetail from "./components/EmployeeDetail";
+import PrivateRoute from "./components/PrivateRoute";
 // import { useEffect } from "react";
 // import axios from "axios";
 
 function App() {
   // const navigate = useNavigate();
 
-
-   
   return (
     <>
       <BrowserRouter>
@@ -32,7 +31,14 @@ function App() {
             path="/employee_detail/:id"
             element={<EmployeeDetail />}
           ></Route>
-          <Route path="/dashboard" element={<Dashboard />}>
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          >
             <Route path="" element={<Home />}></Route>
             <Route path="/dashboard/employee" element={<Employee />}></Route>
             <Route path="/dashboard/category" element={<Category />}></Route>
